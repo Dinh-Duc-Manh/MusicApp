@@ -1,0 +1,92 @@
+<%- include('header') %>
+
+    <section class="content pt-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Danh sách bài hát</h2>
+                            <a href="/create-songs" class="btn btn-sm btn-primary">Thêm mới</a>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Album</th>
+                                        <th>Nghệ Sĩ</th>
+                                        <th>Source</th>
+                                        <th>Image</th>
+                                        <!-- <th>Duration</th> -->
+
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% data.forEach((item, key)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= item.id %>
+                                            </td>
+                                            <td>
+                                                <%= item.title %>
+                                            </td>
+                                            <td>
+                                                <%= item.album %>
+                                            </td>
+                                            <td>
+                                                <%= item.artist %>
+                                            </td>
+                                            <td>
+                                                <audio controls>
+                                                    <source src="<%= item.source %>" type="audio/mpeg">
+                                                </audio>
+
+                                            </td>
+                                            <td>
+                                                <img src="<%= item.image %>" alt="" width="100">
+                                            </td>
+                                            <!-- <td>
+                                        <%= item.duration %>
+                                    </td> -->
+
+                                            <td>
+                                                <a onclick="return confirm('Chắc chưa?')"
+                                                    href="/delete-songs/<%= item.id %>" class="btn btn-danger">Xóa</a>
+
+                                                <a href="/edit-songs/<%= item.id %>" class="btn btn-primary">Sửa</a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer clearfix">
+                            <ul class="pagination pagination-sm m-0 float-right">
+                                <% if(title) { %>
+                                    <li class="page-item"><a class="page-link"
+                                            href="/songs/?page=<%= page > 1 ? page-1 : 1 %>&title=<%= title %>">&laquo;</a>
+                                    </li>
+                                    <% for(i=1; i<=totalPage; i++) { %>
+                                        <li class="page-item"><a class="page-link" href="/songs/?page=<%=i%>&title=<%= title %>"><%= i %></a></li>
+                                        <% } %>
+                                            <li class="page-item"><a class="page-link" href="/songs/?page=<%= page < totalPage ? page+1 : totalPage %>&title=<%= title %>">&raquo;</a></li>
+                                            <% } else { %>
+                                                <li class="page-item"><a class="page-link" href="/songs/?page=<%= page > 1 ? page-1 : 1 %>">&laquo;</a></li>
+                                                <% for(i=1; i<=totalPage; i++) { %>
+                                                    <li class="page-item"><a class="page-link" href="/songs/?page=<%=i%>"><%= i %></a></li>
+                                                    <% } %>
+                                                        <li class="page-item"><a class="page-link" href="/songs/?page=<%= page < totalPage ? page+1 : totalPage %>">&raquo;</a>
+                                                        </li>
+                                                        <% } %>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div><!-- /.container-fluid -->
+    </section>
+    <%- include('footer') %>
